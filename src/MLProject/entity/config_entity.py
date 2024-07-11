@@ -8,10 +8,11 @@ and don't forget to import this class in
 """
 
 @dataclass(frozen=True)
-class DataIngestionConfig:
+class DataIngestionSQLConfig:
     root_dir: Path
-    input_train_path: Path
-    input_test_path: Path
+    source_URI: str
+    data_table: str
+    data_path: Path
     
 @dataclass(frozen=True)
 class PreprocessingConfig:

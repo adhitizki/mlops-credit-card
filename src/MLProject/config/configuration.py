@@ -3,8 +3,9 @@ import os
 from pathlib import Path
 from MLProject.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from MLProject.utils.common import read_yaml, create_directories
-from MLProject.entity.config_entity import (DataIngestionConfig, 
-                                            PreprocessingConfig,
+from MLProject.entity.config_entity import (DataIngestionSQLConfig,
+                                            DataDumpConfig,
+                                            DataPreprocessingConfig,
                                             TrainingConfig,
                                             TrainEvaluationConfig)
 
@@ -24,21 +25,22 @@ class ConfigurationManager:
 
         create_directories([Path(self.config.artifacts_root)])
     
-    def get_data_ingestion_config(self) -> DataIngestionConfig:
+    def get_data_ingestion_sql_config(self) -> DataIngestionSQLConfig:
         """read data ingestion config file and store as config entity
         then apply the dataclasses
         
         Returns:
             config: DataIngestionConfig type
         """
-        data_ingestion_config = self.config.data_ingestion
+        data_ingest_config = self.config.ingest_from_sql
 
-        create_directories([Path(data_ingestion_config.root_dir)])
+        create_directories([data_ingest_config.root_dir])
 
-        config = DataIngestionConfig(
-            root_dir=Path(data_ingestion_config.root_dir),
-            input_train_path=Path(data_ingestion_config.input_train_path),
-            input_test_path=data_ingestion_config.input_test_path,
+        config = DataIngestionSQLConfig(
+            root_dir=data_ingest_config.root_dir,
+            source_URI=os.environ["POSTGRES_URI"],
+            data_table=data_ingest_config.data_table,
+            data_path=Path(data_ingest_config.data_path),
         )
 
         return config
