@@ -15,25 +15,35 @@ class DataIngestionSQLConfig:
     data_path: Path
     
 @dataclass(frozen=True)
-class PreprocessingConfig:
+class DataDumpConfig:
     root_dir: Path
+    data_path: Path
     input_train_path: Path
     input_test_path: Path
     output_train_path: Path
     output_test_path: Path
+    params_test_size: float
+
+@dataclass(frozen=True)
+class DataPreprocessingConfig:
+    root_dir: Path
+    input_train_path: Path
+    input_test_path: Path
+    scaled_train_path: Path
+    scaled_test_path: Path
+    model_dir: Path
+    scaler_model_path: Path
 
 @dataclass(frozen=True)
 class TrainingConfig:
     root_dir: Path
     input_train_path: Path
-    input_test_path: Path
     output_train_path: Path
-    output_test_path: Path
+    scaled_train_path: Path
     model_path: Path
-    params_batch_size: int
-    params_epoch: int
-    params_classes: int
-    params_lr: float
+    params_max_iter: int
+    params_solver: str
+    params_n_jobs: int
 
 @dataclass(frozen=True)
 class TrainEvaluationConfig:
