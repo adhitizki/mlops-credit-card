@@ -41,14 +41,15 @@ class DataPreprocessingConfig:
 
 @dataclass(frozen=True)
 class TrainingConfig:
-    root_dir: Path
     input_train_path: Path
     output_train_path: Path
+    output_test_path: Path
     scaled_train_path: Path
+    scaled_test_path: Path
     model_path: Path
-    params_max_iter: int
-    params_solver: str
-    params_n_jobs: int
+    params_C: list
+    params_solver: list
+    params_n_trials: list
 
 @dataclass(frozen=True)
 class TrainEvaluationConfig:

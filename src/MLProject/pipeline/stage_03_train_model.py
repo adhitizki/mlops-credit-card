@@ -13,7 +13,7 @@ class TrainingPipeline:
             config = ConfigurationManager()
             training_config = config.get_training_config()
             training = Training(config=training_config)
-            training.logistic_regression()
+            training.hpo_logistic_regression()
         except Exception as e:
             logger.error(e)
             raise e

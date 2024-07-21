@@ -108,21 +108,20 @@ class ConfigurationManager:
             config: TrainingConfig type
         """
         data_dump_config = self.config.dump_data
-        scaler_config = self.config.scaler_data
+        scaler_config = self.config.scale_data
         train_config = self.config.train_model
         train_params = self.params
 
-        create_directories([train_config.root_dir])
-
         config = TrainingConfig(
-            root_dir=train_config.root_dir,
             input_train_path=Path(data_dump_config.input_train_path),
             output_train_path=Path(data_dump_config.output_train_path),
+            output_test_path=Path(data_dump_config.output_test_path),
             scaled_train_path=Path(scaler_config.scaled_train_path),
+            scaled_test_path=Path(scaler_config.scaled_test_path),
             model_path=Path(train_config.model_path),
-            params_max_iter=train_params.MAX_ITER,
+            params_C=train_params.C,
             params_solver=train_params.SOLVER,
-            params_n_jobs=train_params.N_JOBS
+            params_n_trials=train_params.N_TRIALS,
         )
 
         return config
