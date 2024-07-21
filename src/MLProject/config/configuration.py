@@ -53,7 +53,7 @@ class ConfigurationManager:
             config: PreprocessingConfig type
         """
         dump_config = self.config.dump_data
-        ingest_config = self.config.ingest_from_sql
+        ingest_config = self.config.data_ingestion
         dataset_params = self.params
 
         create_directories([dump_config.root_dir])
@@ -78,10 +78,10 @@ class ConfigurationManager:
             config: PreprocessingConfig type
         """
         dump_config = self.config.dump_data
-        scaler_config = self.config.scaler_data
+        scaler_config = self.config.scale_data
         train_config = self.config.train_model
 
-        create_directories([scaler_config.root_dir])
+        create_directories([scaler_config.root_dir, train_config.root_dir])
 
         config = DataPreprocessingConfig(
             root_dir=scaler_config.root_dir,

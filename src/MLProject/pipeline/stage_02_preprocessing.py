@@ -12,8 +12,8 @@ class PreprocessingPipeline:
         try:
             config = ConfigurationManager()
             dump_data_config = config.get_dump_data_config()
-            data_ingestion = DumpData(config=dump_data_config)
-            data_ingestion.dump_data()
+            data_dump = DumpData(config=dump_data_config)
+            data_dump.dump_data()
         except Exception as e:
             logger.error(e)
             raise e

@@ -21,7 +21,7 @@ class DumpData:
         dataset = dataset.drop(columns=['id']).copy()
         dataset.dropna(inplace=True)
         
-        logger.info(f"Split reviews file to data train and test.")
+        logger.info(f"Split data file to data train and test.")
         X_train, X_test, y_train, y_test = train_test_split(
             dataset.drop(columns=["Class"]), 
             dataset["Class"], 
@@ -58,7 +58,7 @@ class Preprocessing:
         X_train_scaled = scaler.fit_transform(X_train)
         X_test_scaled = scaler.transform(X_test)
         
-        logger.info(f"Dump the vectorized data.")
+        logger.info(f"Dump the scaled data.")
         joblib.dump(X_train_scaled, self.config.scaled_train_path)
         joblib.dump(X_test_scaled, self.config.scaled_test_path)
         
