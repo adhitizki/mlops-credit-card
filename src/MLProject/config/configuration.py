@@ -63,9 +63,12 @@ class ConfigurationManager:
             data_path=ingest_config.data_path,
             input_train_path=dump_config.input_train_path,
             input_test_path=dump_config.input_test_path,
+            input_valid_path=dump_config.input_valid_path,
             output_train_path=dump_config.output_train_path,
             output_test_path=dump_config.output_test_path,
-            params_test_size=dataset_params.TEST_SIZE
+            output_valid_path=dump_config.output_valid_path,
+            params_test_size=dataset_params.TEST_SIZE,
+            params_valid_size=dataset_params.VALID_SIZE
         )
 
         return config
@@ -87,8 +90,10 @@ class ConfigurationManager:
             root_dir=scaler_config.root_dir,
             input_train_path=Path(dump_config.input_train_path),
             input_test_path=Path(dump_config.input_test_path),
+            input_valid_path=Path(dump_config.input_valid_path),
             scaled_train_path=Path(scaler_config.scaled_train_path),
             scaled_test_path=Path(scaler_config.scaled_test_path),
+            scaled_valid_path=Path(scaler_config.scaled_valid_path),
             model_dir=train_config.root_dir,
             scaler_model_path=Path(scaler_config.scaler_model_path)
         )

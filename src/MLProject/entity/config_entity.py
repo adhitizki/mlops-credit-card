@@ -20,17 +20,22 @@ class DataDumpConfig:
     data_path: Path
     input_train_path: Path
     input_test_path: Path
+    input_valid_path: Path
     output_train_path: Path
     output_test_path: Path
+    output_valid_path: Path
     params_test_size: float
+    params_valid_size: float
 
 @dataclass(frozen=True)
 class DataPreprocessingConfig:
     root_dir: Path
     input_train_path: Path
     input_test_path: Path
+    input_valid_path: Path
     scaled_train_path: Path
     scaled_test_path: Path
+    scaled_valid_path: Path
     model_dir: Path
     scaler_model_path: Path
 
