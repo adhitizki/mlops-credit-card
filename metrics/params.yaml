@@ -1,2 +1,5 @@
 TEST_SIZE: 0.15
 VALID_SIZE: 0.15
+C: [0.0001, 100]
+SOLVER: [liblinear, saga, newton-cholesky]
+N_TRIALS: 5
