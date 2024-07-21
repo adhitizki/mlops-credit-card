@@ -3,7 +3,6 @@ from MLProject.entity.config_entity import DataIngestionSQLConfig
 
 import pandas as pd
 from sqlalchemy import create_engine 
-from tqdm import tqdm
 
 class DataIngestionSQL:
     def __init__(self, config: DataIngestionSQLConfig):

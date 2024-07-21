@@ -32,7 +32,7 @@ class ConfigurationManager:
         Returns:
             config: DataIngestionConfig type
         """
-        data_ingest_config = self.config.ingest_from_sql
+        data_ingest_config = self.config.data_ingestion
 
         create_directories([data_ingest_config.root_dir])
 
