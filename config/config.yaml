@@ -2,11 +2,13 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data-ingestion
-  input_train_path: "artifacts/preprocessing/X_train.csv"
-  input_test_path: "artifacts/preprocessing/X_test.csv"
+  data_path: "artifacts/data-ingestion/credit_card.csv"
+  data_table: "data_features"
 
 preprocessing:
   root_dir: artifacts/preprocessing
+  input_train_path: "artifacts/preprocessing/X_train.csv"
+  input_test_path: "artifacts/preprocessing/X_test.csv"
   output_train_path: "artifacts/preprocessing/y_train.csv"
   output_test_path: "artifacts/preprocessing/y_test.csv"
 
