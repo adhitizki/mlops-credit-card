@@ -5,12 +5,18 @@ data_ingestion:
   data_path: "artifacts/data-ingestion/credit_card.csv"
   data_table: "data_features"
 
-preprocessing:
+dump_data:
+  root_dir: artifacts/data
+  input_train_path: "artifacts/data/X_train.pkl"
+  input_test_path: "artifacts/data/X_test.pkl"
+  output_train_path: "artifacts/data/y_train.pkl"
+  output_test_path: "artifacts/data/y_test.pkl"
+
+scale_data:
   root_dir: artifacts/preprocessing
-  input_train_path: "artifacts/preprocessing/X_train.csv"
-  input_test_path: "artifacts/preprocessing/X_test.csv"
-  output_train_path: "artifacts/preprocessing/y_train.csv"
-  output_test_path: "artifacts/preprocessing/y_test.csv"
+  scaled_train_path: "artifacts/preprocessing/X_train.csv"
+  scaled_test_path: "artifacts/preprocessing/X_test.csv"
+  scaler_model_path: "artifacts/models/scaler.pkl"
 
 train_model:
   root_dir: "artifacts/models"
