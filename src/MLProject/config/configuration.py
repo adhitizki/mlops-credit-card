@@ -10,7 +10,8 @@ from MLProject.entity.config_entity import (DataIngestionSQLConfig,
                                             DataDumpConfig,
                                             DataPreprocessingConfig,
                                             TrainingConfig,
-                                            TrainEvaluationConfig)
+                                            TrainEvaluationConfig,
+                                            PredictionConfig)
 
 """NOTE: Delete or replace any function as you need
 and don't forget to import each class config from
@@ -168,6 +169,34 @@ class ConfigurationManager:
             mlflow_exp_name=eval_config.mlflow_exp_name,
             mlflow_dataset_bucket=os.environ["PROJECT_BUCKET"],
             mlflow_run_name=eval_config.mlflow_run_name
+        )
+
+        return config
+    
+    def get_prediction_config(self) -> PredictionConfig:
+        """read training evaluation config file and store as 
+        config entity then apply the dataclasses
+        
+        Returns:
+            config: PredictionConfig type
+        """
+        predict_config = self.config.predict
+        
+        # for development (debug)
+        dump_data_config = self.config.dump_data
+
+        create_directories([predict_config.root_dir])
+
+        config = PredictionConfig(
+            root_dir=predict_config.root_dir,
+            mlflow_tracking_uri=os.environ["MLFLOW_TRACKING_URI"],
+            mlflow_model_name=predict_config.mlflow_model_name,
+            mlflow_deploy_model_alias=os.environ["MLFLOW_DEPLOY_MODEL_ALIAS"],
+            mlflow_scaler_model_path=predict_config.mlflow_scaler_model_path,
+            
+            # for development (debug)
+            input_valid_path=dump_data_config.input_valid_path,
+            output_valid_path=dump_data_config.output_valid_path
         )
 
         return config

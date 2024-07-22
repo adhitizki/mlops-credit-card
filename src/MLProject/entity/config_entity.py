@@ -77,3 +77,15 @@ class TrainEvaluationConfig:
     mlflow_exp_name: str
     mlflow_dataset_bucket: str
     mlflow_run_name: str
+
+@dataclass(frozen=True)
+class PredictionConfig:
+    root_dir: Path
+    mlflow_tracking_uri: str
+    mlflow_model_name: str
+    mlflow_deploy_model_alias: Path
+    mlflow_scaler_model_path: Path
+    
+    # for development (debug)
+    input_valid_path: Path
+    output_valid_path: Path
