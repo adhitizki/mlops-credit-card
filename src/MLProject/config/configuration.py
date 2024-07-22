@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from pathlib import Path
 from MLProject.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
@@ -127,31 +130,44 @@ class ConfigurationManager:
         return config
     
     def get_train_eval_config(self) -> TrainEvaluationConfig:
-        """read evaluation config file and store as config entity
-        then apply the dataclasses
+        """read training evaluation config file and store as 
+        config entity then apply the dataclasses
         
         Returns:
             config: TrainEvaluationConfig type
         """
-        data_ingestion_config = self.config.data_ingestion
-        preprocessing_config = self.config.preprocessing
-        training_config = self.config.train_model
-        evaluation_config = self.config.evaluation
-        
-        create_directories([Path(evaluation_config.root_dir)])
+        data_dump_config = self.config.dump_data
+        scaler_config = self.config.scale_data
+        train_config = self.config.train_model
+        eval_config = self.config.evaluation
+
+        create_directories([eval_config.root_dir])
 
         config = TrainEvaluationConfig(
-            root_dir=Path(data_ingestion_config.root_dir),
-            input_train_path=Path(data_ingestion_config.input_train_path),
-            input_test_path=Path(data_ingestion_config.input_test_path),
-            output_train_path=Path(preprocessing_config.output_train_path),
-            output_test_path=Path(preprocessing_config.output_test_path),
-            model_path=Path(training_config.model_path),
-            score_path=Path(evaluation_config.score_path),
-            mlflow_dataset_path=Path(evaluation_config.mlflow_dataset_path),
+            root_dir=eval_config.root_dir,
+            input_train_path=Path(data_dump_config.input_train_path),
+            input_test_path=Path(data_dump_config.input_test_path),
+            input_valid_path=Path(data_dump_config.input_valid_path),
+            output_train_path=Path(data_dump_config.output_train_path),
+            output_test_path=Path(data_dump_config.output_test_path),
+            output_valid_path=Path(data_dump_config.output_valid_path),
+            scaled_train_path=Path(scaler_config.scaled_train_path),
+            scaled_test_path=Path(scaler_config.scaled_test_path),
+            scaled_valid_path=Path(scaler_config.scaled_valid_path),
+            scaler_model_path=Path(scaler_config.scaler_model_path),
+            model_path=Path(train_config.model_path),
+            train_score_path=Path(eval_config.train_score_path),
+            test_score_path=Path(eval_config.test_score_path),
+            valid_score_path=Path(eval_config.valid_score_path),
+            mlflow_dataset_path=Path(eval_config.mlflow_dataset_path),
+            mlflow_dataset_column=eval_config.mlflow_dataset_column,
+            minio_endpoint_url=os.environ['MLFLOW_S3_ENDPOINT_URL'],
+            minio_access_key_id=os.environ['MINIO_ACCESS_KEY'],
+            minio_secret_access_key=os.environ['MINIO_SECRET_ACCESS_KEY'],
             mlflow_tracking_uri=os.environ["MLFLOW_TRACKING_URI"],
-            mlflow_exp_name=evaluation_config.mlflow_exp_name,
-            mlflow_run_name=evaluation_config.mlflow_run_name
+            mlflow_exp_name=eval_config.mlflow_exp_name,
+            mlflow_dataset_bucket=os.environ["PROJECT_BUCKET"],
+            mlflow_run_name=eval_config.mlflow_run_name
         )
 
         return config
