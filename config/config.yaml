@@ -27,7 +27,39 @@ train_model:
 
 evaluation:
   root_dir: "artifacts/models"
-  score_path: metrics/scores.json
+  train_score_path: metrics/train_scores.json
+  test_score_path: metrics/test_scores.json
+  valid_score_path: metrics/valid_scores.json
   mlflow_dataset_path: "artifacts/data/ml_eval_result.csv"
-  mlflow_exp_name: "ML Project"
-  mlflow_run_name: "ml-eval"
+  mlflow_dataset_column:
+    - 'V1'
+    - 'V2'
+    - 'V3'
+    - 'V4'
+    - 'V5'
+    - 'V6'
+    - 'V7'
+    - 'V8'
+    - 'V9'
+    - 'V10'
+    - 'V11'
+    - 'V12'
+    - 'V13'
+    - 'V14'
+    - 'V15'
+    - 'V16'
+    - 'V17'
+    - 'V18'
+    - 'V19'
+    - 'V20'
+    - 'V21'
+    - 'V22'
+    - 'V23'
+    - 'V24'
+    - 'V25'
+    - 'V26'
+    - 'V27'
+    - 'V28'
+    - 'Amount'
+  mlflow_exp_name: "Credit Card Fraud Prediction"
+  mlflow_run_name: "eval-hpo-lr"
