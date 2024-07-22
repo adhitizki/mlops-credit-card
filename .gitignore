@@ -161,5 +161,7 @@ cython_debug/
 
 # This project
 artifacts/
-metrics/scores.json
+metrics/train_scores.json
+metrics/test_scores.json
+metrics/valid_scores.json
 notebooks/data
