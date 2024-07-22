@@ -63,3 +63,8 @@ evaluation:
     - 'Amount'
   mlflow_exp_name: "Credit Card Fraud Prediction"
   mlflow_run_name: "eval-hpo-lr"
+
+predict:
+  root_dir: "artifacts/predict"
+  mlflow_model_name: "logistic_regression"
+  mlflow_scaler_model_path: "scaler/scaler.pkl"
