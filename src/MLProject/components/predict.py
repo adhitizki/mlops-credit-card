@@ -5,6 +5,7 @@ from mlflow.artifacts import download_artifacts
 from mlflow import MlflowClient
 from mlflow import pyfunc
 from pathlib import Path
+import pandas as pd
 
 import joblib
 

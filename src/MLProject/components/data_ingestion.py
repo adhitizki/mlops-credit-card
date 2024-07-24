@@ -23,6 +23,7 @@ class DataIngestionSQL:
                 
             logger.info(f"Data dumped from SQL query into {self.config.root_dir} directory")
             conn.close()
+            
         except Exception as e:
             conn.close()
             logger.error(e)
