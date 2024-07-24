@@ -1,0 +1,72 @@
+stages:
+  data_ingestion:
+    cmd: python src/MLProject/pipeline/stage_01_data_ingestion.py
+    deps:
+      - src/MLProject/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data-ingestion/credit_card.csv
+    always_changed: true
+
+  preprocessing:
+    cmd: python src/MLProject/pipeline/stage_02_preprocessing.py
+    deps:
+      - src/MLProject/pipeline/stage_02_preprocessing.py
+      - config/config.yaml
+      - artifacts/data-ingestion/credit_card.csv
+    params:
+      - metrics/params.yaml:
+        - TEST_SIZE
+        - VALID_SIZE
+    outs:
+      - artifacts/data/X_train.pkl
+      - artifacts/data/X_test.pkl
+      - artifacts/data/X_valid.pkl
+      - artifacts/data/y_train.pkl
+      - artifacts/data/y_test.pkl
+      - artifacts/data/y_valid.pkl
+      - artifacts/preprocessing/X_train.csv
+      - artifacts/preprocessing/X_test.csv
+      - artifacts/preprocessing/X_valid.csv
+      - artifacts/models/scaler.pkl
+  
+  training:
+    cmd: python src/MLProject/pipeline/stage_03_train_model.py
+    deps:
+      - src/MLProject/pipeline/stage_03_train_model.py
+      - config/config.yaml
+      - artifacts/data/X_train.pkl
+      - artifacts/data/X_test.pkl
+      - artifacts/preprocessing/X_train.csv
+      - artifacts/preprocessing/X_test.csv
+    params:
+      - metrics/params.yaml:
+        - C
+        - SOLVER
+        - N_TRIALS
+    outs:
+      - artifacts/models/model.pkl
+  
+  evaluation:
+    cmd: python src/MLProject/pipeline/stage_04_model_evaluation.py
+    deps:
+      - src/MLProject/pipeline/stage_04_model_evaluation.py
+      - config/config.yaml
+      - artifacts/data/X_train.pkl
+      - artifacts/data/X_test.pkl
+      - artifacts/data/X_valid.pkl
+      - artifacts/data/y_train.pkl
+      - artifacts/data/y_test.pkl
+      - artifacts/data/y_valid.pkl
+      - artifacts/preprocessing/X_train.csv
+      - artifacts/preprocessing/X_test.csv
+      - artifacts/preprocessing/X_valid.csv
+      - artifacts/models/scaler.pkl
+      - artifacts/models/model.pkl
+    metrics:
+    - metrics/train_scores.json:
+        cache: false
+    - metrics/test_scores.json:
+        cache: false
+    - metrics/valid_scores.json:
+        cache: false

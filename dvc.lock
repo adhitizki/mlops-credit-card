@@ -1,0 +1,187 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/MLProject/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 029bf66c54219b1806663d3fd415e261
+      size: 1682
+    - path: src/MLProject/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: cd5956560fa1e2250df9aa0159c4047f
+      size: 858
+    outs:
+    - path: artifacts/data-ingestion/credit_card.csv
+      hash: md5
+      md5: f400ab7ea5f472ad0f51779af7b741e7
+      size: 31740179
+  preprocessing:
+    cmd: python src/MLProject/pipeline/stage_02_preprocessing.py
+    deps:
+    - path: artifacts/data-ingestion/credit_card.csv
+      hash: md5
+      md5: f400ab7ea5f472ad0f51779af7b741e7
+      size: 31740179
+    - path: config/config.yaml
+      hash: md5
+      md5: 029bf66c54219b1806663d3fd415e261
+      size: 1682
+    - path: src/MLProject/pipeline/stage_02_preprocessing.py
+      hash: md5
+      md5: e234fdf5ede982e94a2c679b0f3c0241
+      size: 1346
+    params:
+      metrics/params.yaml:
+        TEST_SIZE: 0.15
+        VALID_SIZE: 0.15
+    outs:
+    - path: artifacts/data/X_test.pkl
+      hash: md5
+      md5: cbf96f76a6a7ab9b8c14be172571d6db
+      size: 2047822
+    - path: artifacts/data/X_train.pkl
+      hash: md5
+      md5: 537d898be351b1276601564afbc7aa82
+      size: 9553822
+    - path: artifacts/data/X_valid.pkl
+      hash: md5
+      md5: 881d06c46ea5f3ee64b80d2965bd4416
+      size: 2048062
+    - path: artifacts/data/y_test.pkl
+      hash: md5
+      md5: 431b3028a5497aa852216091fb7144e5
+      size: 205308
+    - path: artifacts/data/y_train.pkl
+      hash: md5
+      md5: ae4ef3ab7cf2b830610939e0085a4ab6
+      size: 955908
+    - path: artifacts/data/y_valid.pkl
+      hash: md5
+      md5: 4816875c611c935281f39eadc67ee9ca
+      size: 205332
+    - path: artifacts/models/scaler.pkl
+      hash: md5
+      md5: bb748915f69ddc4fca9144eaf9f41a9e
+      size: 1871
+    - path: artifacts/preprocessing/X_test.csv
+      hash: md5
+      md5: aa299066e74d2ac325bd1ba52d3f0943
+      size: 1978969
+    - path: artifacts/preprocessing/X_train.csv
+      hash: md5
+      md5: c100a2ee46813b74ba5f499e4fb3df61
+      size: 9234769
+    - path: artifacts/preprocessing/X_valid.csv
+      hash: md5
+      md5: 5caa7a2afc06f30827c130519610190a
+      size: 1979201
+  training:
+    cmd: python src/MLProject/pipeline/stage_03_train_model.py
+    deps:
+    - path: artifacts/data/X_test.pkl
+      hash: md5
+      md5: cbf96f76a6a7ab9b8c14be172571d6db
+      size: 2047822
+    - path: artifacts/data/X_train.pkl
+      hash: md5
+      md5: 537d898be351b1276601564afbc7aa82
+      size: 9553822
+    - path: artifacts/preprocessing/X_test.csv
+      hash: md5
+      md5: aa299066e74d2ac325bd1ba52d3f0943
+      size: 1978969
+    - path: artifacts/preprocessing/X_train.csv
+      hash: md5
+      md5: c100a2ee46813b74ba5f499e4fb3df61
+      size: 9234769
+    - path: config/config.yaml
+      hash: md5
+      md5: 029bf66c54219b1806663d3fd415e261
+      size: 1682
+    - path: src/MLProject/pipeline/stage_03_train_model.py
+      hash: md5
+      md5: 13b73f4571792872f2886681395e7d61
+      size: 907
+    params:
+      metrics/params.yaml:
+        C:
+        - 0.0001
+        - 10
+        N_TRIALS: 5
+        SOLVER:
+        - liblinear
+        - newton-cholesky
+    outs:
+    - path: artifacts/models/model.pkl
+      hash: md5
+      md5: 8df39bb38035aeb50a18e89ed4380a8b
+      size: 1115
+  evaluation:
+    cmd: python src/MLProject/pipeline/stage_04_model_evaluation.py
+    deps:
+    - path: artifacts/data/X_test.pkl
+      hash: md5
+      md5: cbf96f76a6a7ab9b8c14be172571d6db
+      size: 2047822
+    - path: artifacts/data/X_train.pkl
+      hash: md5
+      md5: 537d898be351b1276601564afbc7aa82
+      size: 9553822
+    - path: artifacts/data/X_valid.pkl
+      hash: md5
+      md5: 881d06c46ea5f3ee64b80d2965bd4416
+      size: 2048062
+    - path: artifacts/data/y_test.pkl
+      hash: md5
+      md5: 431b3028a5497aa852216091fb7144e5
+      size: 205308
+    - path: artifacts/data/y_train.pkl
+      hash: md5
+      md5: ae4ef3ab7cf2b830610939e0085a4ab6
+      size: 955908
+    - path: artifacts/data/y_valid.pkl
+      hash: md5
+      md5: 4816875c611c935281f39eadc67ee9ca
+      size: 205332
+    - path: artifacts/models/model.pkl
+      hash: md5
+      md5: 8df39bb38035aeb50a18e89ed4380a8b
+      size: 1115
+    - path: artifacts/models/scaler.pkl
+      hash: md5
+      md5: bb748915f69ddc4fca9144eaf9f41a9e
+      size: 1871
+    - path: artifacts/preprocessing/X_test.csv
+      hash: md5
+      md5: aa299066e74d2ac325bd1ba52d3f0943
+      size: 1978969
+    - path: artifacts/preprocessing/X_train.csv
+      hash: md5
+      md5: c100a2ee46813b74ba5f499e4fb3df61
+      size: 9234769
+    - path: artifacts/preprocessing/X_valid.csv
+      hash: md5
+      md5: 5caa7a2afc06f30827c130519610190a
+      size: 1979201
+    - path: config/config.yaml
+      hash: md5
+      md5: 029bf66c54219b1806663d3fd415e261
+      size: 1682
+    - path: src/MLProject/pipeline/stage_04_model_evaluation.py
+      hash: md5
+      md5: e0aeac3ebe45d10bbac31b78f13f474a
+      size: 841
+    outs:
+    - path: metrics/test_scores.json
+      hash: md5
+      md5: f1c7c15d8a467504b4b3f13f1b9ebdb7
+      size: 709
+    - path: metrics/train_scores.json
+      hash: md5
+      md5: 5cc1c95a9bffbd1373e3f7b5361be2ea
+      size: 712
+    - path: metrics/valid_scores.json
+      hash: md5
+      md5: 0d267dc87a1ddcce09ddfb7e0aca2cf4
+      size: 707
