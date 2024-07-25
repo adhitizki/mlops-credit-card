@@ -68,3 +68,7 @@ predict:
   root_dir: "artifacts/predict"
   mlflow_model_name: "logistic_regression"
   mlflow_scaler_model_path: "scaler/scaler.pkl"
+
+unit_test:
+  root_dir: "artifacts/test"
+  mlflow_input_example_path: "models/input_example.json"
