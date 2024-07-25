@@ -11,7 +11,8 @@ from MLProject.entity.config_entity import (DataIngestionSQLConfig,
                                             DataPreprocessingConfig,
                                             TrainingConfig,
                                             TrainEvaluationConfig,
-                                            PredictionConfig)
+                                            PredictionConfig,
+                                            UnitTestConfig)
 
 """NOTE: Delete or replace any function as you need
 and don't forget to import each class config from
@@ -197,6 +198,29 @@ class ConfigurationManager:
             # for development (debug)
             input_valid_path=dump_data_config.input_valid_path,
             output_valid_path=dump_data_config.output_valid_path
+        )
+
+        return config
+    
+    def get_unit_test_config(self) -> UnitTestConfig:
+        """read training evaluation config file and store as 
+        config entity then apply the dataclasses
+        
+        Returns:
+            config: UnitTestConfig type
+        """
+        predict_config = self.config.predict
+        unit_test_config = self.config.unit_test
+
+        create_directories([unit_test_config.root_dir])
+
+        config = UnitTestConfig(
+            root_dir=unit_test_config.root_dir,
+            mlflow_tracking_uri=os.environ["MLFLOW_TRACKING_URI"],
+            mlflow_model_name=predict_config.mlflow_model_name,
+            mlflow_deploy_model_alias=os.environ["MLFLOW_DEPLOY_MODEL_ALIAS"],
+            mlflow_input_example_path=unit_test_config.mlflow_input_example_path,
+            app_endpoint=os.environ["APP_ENDPOINT"]
         )
 
         return config

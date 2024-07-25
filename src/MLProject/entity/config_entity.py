@@ -89,3 +89,12 @@ class PredictionConfig:
     # for development (debug)
     input_valid_path: Path
     output_valid_path: Path
+
+@dataclass(frozen=True)
+class UnitTestConfig:
+    root_dir: Path
+    mlflow_tracking_uri: str
+    mlflow_model_name: str
+    mlflow_deploy_model_alias: str
+    mlflow_input_example_path: Path
+    app_endpoint: str
